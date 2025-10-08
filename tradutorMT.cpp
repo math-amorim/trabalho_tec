@@ -1,14 +1,47 @@
 #include <bits/stdc++.h> 
 using namespace std; 
 
-void S_to_I(fstream& input){
+// current state, current symbol, new symbol, direction, new state 
+// ; comentário 
+// l - left, r - right, * - stay 
+// halt - para, halt-accept - aceita 
+// Auxiliares: #, &, %, £, ¢, § 
+
+map < pair<string, char>, tuple<char,char,string> > converter(fstream& input){ 
+    map <pair<string, char>, tuple<char,char,string>> funcao; 
+
+    string from, to; char read, write, move; 
+    
+    while(true){ 
+        if(!(input >> from >> read >> write >> move >> to)) break; 
+        
+        funcao[{from, read}] = {write, move, to} ;  
+     } 
+    /*  
+     for(auto &[key, t] : funcao) {
+          string from = key.first, to = get<2>(t);
+          char read = key.second, write = get<0>(t), move = get<1>(t);
+          cout << from << " " << read << " " << write << " " << move << " " << to << endl;
+      }
+    */ 
+
+    return funcao; 
+} 
+
+void S_to_I(map<pair<string,char>, tuple<char,char,string>> funcao){
     cout << "Traduzindo de Sipser para Duplamente Infinita" << endl; 
-    string line; 
-    while(getline(input,line)) cout << line << endl; 
+  
+    for(auto &[key, t] : funcao) { 
+        string from = key.first, to = get<2>(t);
+        char read = key.second, write = get<0>(t), move = get<1>(t);
+
+    }     
+    // (estado, simbolo) -> (novo_estado, novo_simbolo, direcao)
+   
 
 } 
 
-void I_to_S(fstream& input){ 
+void I_to_S(map<pair<string,char>, tuple<char,char,string>> funcao){ 
     cout << "Traduzindo de Duplamente Infinita para Sipser" << endl;
 
 }
@@ -22,8 +55,8 @@ int main(){
     else{ 
         string line; 
         getline(input,line); 
-        if(line[1] == 'S') S_to_I(input); 
-        else I_to_S(input); 
+        if(line[1] == 'S') S_to_I(converter(input)); 
+        else I_to_S(converter(input)); 
     } 
     
     input.close(); 
