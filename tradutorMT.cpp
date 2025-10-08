@@ -28,6 +28,7 @@ map < pair<string, char>, tuple<char,char,string> > converter(fstream& input){
     return funcao; 
 } 
 
+
 void S_to_I(map<pair<string,char>, tuple<char,char,string>> funcao){
     cout << "Traduzindo de Sipser para Duplamente Infinita" << endl; 
   
@@ -43,6 +44,11 @@ void S_to_I(map<pair<string,char>, tuple<char,char,string>> funcao){
 
 void I_to_S(map<pair<string,char>, tuple<char,char,string>> funcao){ 
     cout << "Traduzindo de Duplamente Infinita para Sipser" << endl;
+    for(auto &[key, t] : funcao) { 
+        string from = key.first, to = get<2>(t); 
+        char read = key.second, write = get<0>(t), move = get<1>(t); 
+
+    }
 
 }
 
