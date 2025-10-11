@@ -15,11 +15,16 @@ struct T {
 
 map<pair<string, string>, T> converter(fstream& input){ 
 	map<pair<string, string>, T> funcao; 
-    string from, read, write, to; char move; 
-    
-    while(true){ 
-        if(!(input >> from >> read >> write >> move >> to)) break; 
-		T aux;
+    string line, from, read, write, to; char move; 
+   
+    while(getline(input,line)){ 
+        if(line[0] == ';' or line.empty()) continue;
+        
+        stringstream ss(line); 
+
+        if(!(ss >> from >> read >> write >> move >> to)) continue; 
+             
+        T aux;
 		aux.newsy = write;
 		aux.d = move;
 		aux.newst = to;
@@ -40,31 +45,31 @@ void I_to_S(map<pair<string,string>, T> funcao){
 	cout << "Traduzindo de Duplamente Infinita para Sipser" << endl;
     map<pair<string,string>, T> f;
     // Pré-processamento.
-    f[{"0", "1"}] = {"&", 'r', "first_blank"}; 
-    f[{"0", "0" }] = {"#", 'r', "first_blank" }; 
+    //f[{"0", "1"}] = {"&", 'r', "first_blank"}; 
+    //f[{"0", "0" }] = {"#", 'r', "first_blank" }; 
     
-    f[{"first_blank", "*" }] = {"*", 'r', "first_blank" };
-    f[{"first_blank", "_" }] = {"£", 'l', "next" };
+    //f[{"first_blank", "*" }] = {"*", 'r', "first_blank" };
+    //f[{"first_blank", "_" }] = {"£", 'l', "next" };
 
-    f[{"next", "_" }] = {"_", 'l', "next" };
-    f[{"next", "%" }] = {"*", 'l', "next" };
-    f[{"next", "0" }] = {"%", 'r', "next0"};
-    f[{"next", "1" }] = {"%", 'r', "next1"};
-    f[{"next", "&" }] = {"§", 'r', "next1"};
-    f[{"next", "#" }] = {"§", 'r', "next0"};
-    f[{"next",  "§"}] = {"*", 'r', "old0"};
+    //f[{"next", "_" }] = {"_", 'l', "next" };
+    //f[{"next", "%" }] = {"*", 'l', "next" };
+    //f[{"next", "0" }] = {"%", 'r', "next0"};
+    //f[{"next", "1" }] = {"%", 'r', "next1"};
+    //f[{"next", "&" }] = {"§", 'r', "next1"};
+    //f[{"next", "#" }] = {"§", 'r', "next0"};
+    //f[{"next",  "§"}] = {"*", 'r', "old0"};
 
-    f[{"next0","*"}] = {"0", 'l', "next"};
-    f[{"next0", "0"}] = {"*", 'l', "next0"};
-    f[{"next0","£"}] = {"0", 'r', "next0"};
-    f[{"next0", "_"}] = {"£", 'l', "next0"}; 
-    f[{"next0", "§"}] = {"*", 'r', "old0"}; 
+    //f[{"next0","*"}] = {"0", 'l', "next"};
+    //f[{"next0", "0"}] = {"*", 'l', "next0"};
+    //f[{"next0","£"}] = {"0", 'r', "next0"};
+    //f[{"next0", "_"}] = {"£", 'l', "next0"}; 
+    //f[{"next0", "§"}] = {"*", 'r', "old0"}; 
    
-    f[{"next1", "*"}] = {"1", 'l', "next"};
-    f[{"next1", "1"}] = {"*", 'l', "next1"};
-    f[{"next1", "£"}] = {"1", 'r', "next1"};
-    f[{"next1", "_"}] = {"£", 'l', "next1"}; 
-    f[{"next1","§"}] = {"*", 'r', "old0"}; 
+    //f[{"next1", "*"}] = {"1", 'l', "next"};
+    //f[{"next1", "1"}] = {"*", 'l', "next1"};
+    //f[{"next1", "£"}] = {"1", 'r', "next1"};
+    //f[{"next1", "_"}] = {"£", 'l', "next1"}; 
+    //f[{"next1","§"}] = {"*", 'r', "old0"}; 
    
     string ant = "0"; int flagl = 0, flagr= 0;  
     for(auto &[key, t] : funcao) {  
@@ -81,15 +86,15 @@ void I_to_S(map<pair<string,string>, T> funcao){
       
         f[{from, read}] = {write, move, to};
         
-        if(flagr == 1 and write == "_"){ 
-            f[{from, "£"}] = {"%", 'r', from}; 
-            f[{from, "_"}] = {"£", 'l', from}; 
-            f[{from, "%"}] = {"_", 'l', to}; 
-        } 
+      //  if(flagr == 1 and write == "_"){ 
+        //    f[{from, "£"}] = {"%", 'r', from}; 
+          //  f[{from, "_"}] = {"£", 'l', from}; 
+           // f[{from, "%"}] = {"_", 'l', to}; 
+        //} 
         
-        if(flagl == 1){ 
-            f[{from, "§"}] = { "*", 'r',"0"} ;
-        } 
+        //if(flagl == 1){ 
+          //  f[{from, "§"}] = { "*", 'r',"0"} ;
+        //} 
 
         ant = from; 
     }

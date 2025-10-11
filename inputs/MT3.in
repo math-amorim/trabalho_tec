@@ -1,4 +1,4 @@
-; verifica em qual caso a palavra deve estar
+;S
 00 0 i r ABC
 00 1 u r XYZ
 ; início em 1, contagem de pelo menos três símbolos 1 para então fazer o balanceamento
