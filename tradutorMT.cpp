@@ -73,6 +73,7 @@ void I_to_S(map<pair<string,string>, T> funcao){
         
         if(ant != from) { flagr = 0; flagl = 0;  }
 
+        if(move == 'l') flagl = 1; 
         if(move == 'r') flagr = 1; 
 
         if(from == "0") from = "old0"; 
@@ -86,6 +87,10 @@ void I_to_S(map<pair<string,string>, T> funcao){
             f[{from, "%"}] = {"_", 'l', to}; 
         } 
         
+        if(flagl == 1){ 
+            f[{from, "§"}] = { "*", 'r',"0"} ;
+        } 
+
         ant = from; 
     }
     
@@ -103,7 +108,7 @@ void I_to_S(map<pair<string,string>, T> funcao){
 
 int main(){ 
     fstream input; 
-    input.open("MT1.in", ios::in); 
+    input.open("inputs/MT1.in", ios::in); 
 
     if(!input) cout << "Erro ao ler a máquina de input." << endl; 
     else{ 
