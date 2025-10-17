@@ -14,21 +14,21 @@ Durante a conversão, adotamos o seguinte padrão:
 * £ é o símbolo inidicador final da entrada.
 
 Explicação da tradução de MT S -> MT I:
-Para essa conversão, seguimos os seguintes passos:
-1 - Inicialmente, colocamos o símbolo § no início da entrada, o qual é feito no estado inicial "0".
-2 - Substituímos o estado "0" para o novo estado reservado "old0" para cada transição da antiga função onde o estado era presente.
-3 - Além disso, para toda transição, se a direção de um estado for para a esquerda, adicionamos uma nova transição para aquele estado, verificando se ele está lendo o marcador inicial. Caso essa verificação for feita durante uma simulação,
-dizemos que ele escreve o mesmo símbolo, permanece no mesmo estado e realiza um movimento para a direita (simulando um movimento estacionário).
+Para essa conversão, seguimos os seguintes passos: <br>
+1 - Inicialmente, colocamos o símbolo § no início da entrada, o qual é feito no estado inicial "0". <br>
+2 - Substituímos o estado "0" para o novo estado reservado "old0" para cada transição da antiga função onde o estado era presente. <br>
+3 - Além disso, para toda transição, se a direção de um estado for para a esquerda, adicionamos uma nova transição para aquele estado, verificando se ele está lendo o marcador inicial. Caso essa verificação for feita durante uma simulação, 
+dizemos que ele escreve o mesmo símbolo, permanece no mesmo estado e realiza um movimento para a direita (simulando um movimento estacionário). <br>
 4 - Após conversão, retorna-se a nova função programa. 
 
 Explicação da tradução de MT I -> MT S:
-Para essa conversão, seguimos os seguintes passos:
+Para essa conversão, seguimos os seguintes passos: <br>
 1 - Inicialmente, inserimos o símbolo § e deslocamos todo o conteúdo da fita um espaço a direita. Durante esse processo, utilizamos os novos estados reservados "shift1" e "shift0" para deslocar os 1's e 0's
-respectivamente, "set£" para alocar o símbolo £, e "reset" para colocar o cabeçote novamente no início da entrada. Também substituímos o estado "0" por "old0", de forma similiar a tradução MT S -> MT I.
+respectivamente, "set£" para alocar o símbolo £, e "reset" para colocar o cabeçote novamente no início da entrada. Também substituímos o estado "0" por "old0", de forma similiar a tradução MT S -> MT I. <br>
 2 - Durante a tradução, caso a transição possua um movimento para a direita, criamos um estado reservado "aux" que é concatenado com o nome do estado que desejo após ir a transição.
-Nas transições relacionadas ao estado em que se deseja alcançar, também é adicionada uma transição para verificar se o símbolo de final de entrada é lido para que se possa adicionar um espaço em seu lugar e empurrá-lo para direita, sem perder a informação dos estados executados.
+Nas transições relacionadas ao estado em que se deseja alcançar, também é adicionada uma transição para verificar se o símbolo de final de entrada é lido para que se possa adicionar um espaço em seu lugar e empurrá-lo para direita, sem perder a informação dos estados executados. <br>
 3 - Caso um estado possua uma transição com movimento para esquerda dentro do seu conjunto de transições, cria-se e adiciona-se novos estados auxiliares que verificam se o símbolo lido é §, adicionam um espaço à sua direita e realizam a lógica de deslocamento do conteúdo da fita para a direita, através dos estados de "shift_" concatenado com o estado que se deseja alcançar concatenado com o símbolo que se deseja deslocar para a direita. 
-Os estados reservados  "to_" + "nome do estado", servem para manter a informação para qual estado deve-se retornar após a realização do shift para continuar o processamento da função programa normalmente.
-4 - Após a conversão, retorna-se a nova função programa. 
+Os estados reservados  "to_" + "nome do estado", servem para manter a informação para qual estado deve-se retornar após a realização do shift para continuar o processamento da função programa normalmente. <br>
+4 - Após a conversão, retorna-se a nova função programa. <br>
 
 A função de output gera um arquivo .out através da nova função programa recebida como parâmetro pelo resultado das funções de tradução e o salva no caminho definido pela variável global chamada "saida" definida juntamente com a variável global caminho.
