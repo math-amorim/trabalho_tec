@@ -7,7 +7,7 @@ using namespace std;
 // halt - para, halt-accept - aceita 
 // Auxiliares: #, &, %, £, ¢, § 
 
-string caminho = "inputs/MT1.in", saida = "output/traducao.out"; 
+string caminho = "inputs/teste-S-I.in", saida = "output/traducao.out"; 
 
 struct T {
 	string newsy;
@@ -35,15 +35,32 @@ map<pair<string, string>, T> converter(fstream& input){
     return funcao; 
 } 
 
-void S_to_I(map<pair<string,string>, T> funcao){
+map<pair<string,string>, T> S_to_I(map<pair<string,string>, T> funcao){
     cout << "Traduzindo de Sipser para Duplamente Infinita" << endl; 
-    for(auto &[key, t] : funcao) { 
-        string from = key.first, to = t.newst, read = key.second, write = t.newsy;
-        char move = t.d;
-    }     
+
+	map<pair<string,string>, T> f;
+
+	f[{"0", "*"}] = {"*", 'l', "0"};
+	f[{"0", "_"}] = {"§", 'r', "old0"};
+
+	for(auto &[key, t] : funcao) { 
+        string from = key.first, to = t.newst;
+		string read = key.second, write = t.newsy;
+		char move = t.d;
+
+		if (from == "0") from = "old0";
+		if (to == "0") to = "old0";
+
+		if (move == 'l') {
+			f[{from, "§"}] = {"§", 'r', from};
+		}
+
+		f[{from, read}] = {write, move, to};
+    }
+	return f;
 } 
 
-void I_to_S(map<pair<string,string>, T> funcao){ 
+map<pair<string,string>, T>  I_to_S(map<pair<string,string>, T> funcao){ 
 	cout << "Traduzindo de Duplamente Infinita para Sipser" << endl;
     map<pair<string,string>, T> f;
     // Pré-processamento.
@@ -76,7 +93,7 @@ void I_to_S(map<pair<string,string>, T> funcao){
         
         if(move == 'r'){ 
             new_state = "aux";
-            new_state +=from; 
+            new_state += to; 
             f[{to, "£"}] = {"*", 'r', new_state}; 
             f[{new_state, "_"}] = {"£", 'l', new_state}; 
             f[{new_state, "£"}] = {"_", '*', to}; 
@@ -110,21 +127,21 @@ void I_to_S(map<pair<string,string>, T> funcao){
         } 
  
     }
-    
-    previous = "0"; 
-     
-    ofstream output(saida); 
-    
-    for(auto &[key, t] : f){ 
-        string from = key.first, to = t.newst, read = key.second, write =     t.newsy;
-        char move = t.d; 
-       
-        if(previous != from){ previous = from; output << endl; }  
-          output << from << " " << read << " " << write << " " << move << " "     <<  to << endl;
-         
-    } 
+    return f; 
 }
 
+void output(map<pair<string,string>, T> f){ 
+     string previous = "0"; 
+     ofstream output(saida);
+ 
+     for(auto &[key, t] : f){
+         string from = key.first, to = t.newst, read = key.second, write =     t.newsy;
+         char move = t.d;
+ 
+         if(previous != from){ previous = from; output << endl; }
+           output << from << " " << read << " " << write << " " << move << " "     <<  to << endl; 
+     }
+} 
 
 int main(){ 
     fstream input; 
@@ -134,8 +151,8 @@ int main(){
     else{ 
         string line; 
         getline(input,line); 
-        if(line[1] == 'S') S_to_I(converter(input)); 
-        else I_to_S(converter(input)); 
+        if(line[1] == 'S') output(S_to_I(converter(input))); 
+        else output(I_to_S(converter(input))); 
     } 
     input.close(); 
     return 0; 

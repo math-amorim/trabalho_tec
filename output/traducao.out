@@ -1,148 +1,38 @@
-0 0 § r shift0
-0 1 § r shift1
+0 * * l 0
+0 _ § r old0
 
 1 0 0 r 1
 1 1 1 r 1
 1 _ _ l 2
-1 £ * r aux1
+1 § § r 1
 
 2 0 0 r 4
 2 1 0 l 6
 2 U 1 r 3
 2 Z 0 l halt-accept
-2 § * r shift_2
+2 § § r 2
 
 3 _ 0 l halt-accept
-3 £ * r aux2
+3 § § r 3
 
 4 _ 0 l 5
-4 £ * r aux2
+4 § § r 4
 
 5 0 0 l 5
 5 1 1 l 5
 5 U 1 l halt-accept
 5 Z 0 l halt-accept
-5 § * r shift_5
+5 § § r 5
 
 6 0 1 l 5
 6 1 0 l 6
 6 U 1 r 7
 6 Z 1 l halt-accept
-6 § * r shift_6
+6 § § r 6
 
 7 0 0 r 7
 7 _ 0 r halt-accept
-7 £ * r aux7
-
-aux1 _ £ l aux1
-aux1 £ _ * 1
-
-aux2 _ £ l aux2
-aux2 £ _ * 3
-
-aux6 _ £ l aux6
-aux6 £ _ * 7
-
-aux7 _ £ l aux7
-aux7 £ _ * halt-accept
-
-auxold0 _ £ l auxold0
-auxold0 £ _ * halt
-
-halt £ * r auxold0
-
-halt-accept £ * r aux7
-halt-accept § * r shift_halt-accept
 
 old0 0 Z r 1
 old0 1 U r 1
 old0 _ _ r halt
-
-reset * * l reset
-reset § * r old0
-
-set_£_2 _ £ l to_2
-
-set_£_5 _ £ l to_5
-
-set_£_6 _ £ l to_6
-
-set_£_halt-accept _ £ l to_halt-accept
-
-set£ _ £ l reset
-
-shift0 0 0 r shift0
-shift0 1 0 r shift1
-shift0 _ 0 r set£
-
-shift1 0 1 r shift0
-shift1 1 1 r shift1
-shift1 _ 1 r set£
-
-shift_2 0 _ r shift_2_0
-shift_2 1 _ r shift_2_1
-
-shift_2_0 0 0 r shift_2_0
-shift_2_0 1 0 r shift_2_1
-shift_2_0 _ 0 r to_2
-shift_2_0 £ 0 r set_£_2
-
-shift_2_1 0 1 r shift_2_0
-shift_2_1 1 1 r shift_2_1
-shift_2_1 _ 1 r to_2
-shift_2_1 £ 1 r set_£_2
-
-shift_5 0 _ r shift_5_0
-shift_5 1 _ r shift_5_1
-
-shift_5_0 0 0 r shift_5_0
-shift_5_0 1 0 r shift_5_1
-shift_5_0 _ 0 r to_5
-shift_5_0 £ 0 r set_£_5
-
-shift_5_1 0 1 r shift_5_0
-shift_5_1 1 1 r shift_5_1
-shift_5_1 _ 1 r to_5
-shift_5_1 £ 1 r set_£_5
-
-shift_6 0 _ r shift_6_0
-shift_6 1 _ r shift_6_1
-
-shift_6_0 0 0 r shift_6_0
-shift_6_0 1 0 r shift_6_1
-shift_6_0 _ 0 r to_6
-shift_6_0 £ 0 r set_£_6
-
-shift_6_1 0 1 r shift_6_0
-shift_6_1 1 1 r shift_6_1
-shift_6_1 _ 1 r to_6
-shift_6_1 £ 1 r set_£_6
-
-shift_halt-accept 0 _ r shift_halt-accept_0
-shift_halt-accept 1 _ r shift_halt-accept_1
-
-shift_halt-accept_0 0 0 r shift_halt-accept_0
-shift_halt-accept_0 1 0 r shift_halt-accept_1
-shift_halt-accept_0 _ 0 r to_halt-accept
-shift_halt-accept_0 £ 0 r set_£_halt-accept
-
-shift_halt-accept_1 0 1 r shift_halt-accept_0
-shift_halt-accept_1 1 1 r shift_halt-accept_1
-shift_halt-accept_1 _ 1 r to_halt-accept
-shift_halt-accept_1 £ 1 r set_£_halt-accept
-
-to_2 * * l to_2
-to_2 £ _ r set_£_2
-to_2 § * r 2
-
-to_5 * * l to_5
-to_5 £ _ r set_£_5
-to_5 § * r 5
-
-to_6 * * l to_6
-to_6 £ _ r set_£_6
-to_6 § * r 6
-
-to_halt-accept * * l to_halt-accept
-to_halt-accept £ _ r set_£_halt-accept
-to_halt-accept § * r halt-accept
